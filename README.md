@@ -1,6 +1,6 @@
 # SpaceX App - TS & React Testing Library
 
-[Previous extended app, without react-testing-library](https://github.com/maciejk77/spacex-ts)
+Click here: [Previous extended app, without react-testing-library](https://github.com/maciejk77/spacex-ts)
 
 ### Requirements
 
