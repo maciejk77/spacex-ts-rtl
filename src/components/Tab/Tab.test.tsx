@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Tab from './Tab';
 
 const props = {
@@ -15,11 +15,13 @@ it('renders without crashing, inactive state', () => {
   expect(tab).toHaveStyle({ backgroundColor: 'white', color: 'black' });
 });
 
-it('sets to active tab (changes the background and text color) on click', () => {
+it('sets to active tab (changes the background and text color) on click', async () => {
   render(<Tab {...props} />);
   const tab = screen.getByRole('button', { name: /shuttles$/i });
   fireEvent.click(tab);
-  expect(tab).toHaveStyle({ backgroundColor: 'black', color: 'white' }); // TODO failing test?
+  await waitFor(() =>
+    expect(tab).toHaveStyle({ backgroundColor: 'black', color: 'white' })
+  ); // TODO failing test?
 });
 
 it('receives a click', () => {

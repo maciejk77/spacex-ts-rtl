@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Tab from '../Tab/Tab';
-import { BASE_URL, ROCKETS, DRAGONS } from '../../constants';
+import { ROCKETS, DRAGONS } from '../../constants';
 import Container from '../Container/Container';
+import { fetchData } from '../../utils/fetchData';
 
 const App = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState(null);
@@ -10,9 +11,8 @@ const App = (): JSX.Element => {
   const handleClick = async (e: any) => {
     // TODO any
     const { name } = e.target;
-    const response = await fetch(`${BASE_URL}/${name}`);
-    const json = await response.json();
-    setData(json);
+    const data = await fetchData(name);
+    setData(data);
     setActiveTab(name);
   };
 
