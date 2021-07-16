@@ -9,10 +9,10 @@ const rocketsUrl = getUrl(ROCKETS);
 const dragonsUrl = getUrl(DRAGONS);
 
 const server = setupServer(
-  rest.get(rocketsUrl, (req, res, ctx) => {
+  rest.get(rocketsUrl, (_, res, ctx) => {
     return res(ctx.status(200), ctx.json(rocketsDataMock));
   }),
-  rest.get(dragonsUrl, (req, res, ctx) => {
+  rest.get(dragonsUrl, (_, res, ctx) => {
     return res(ctx.status(200), ctx.json(dragonsDataMock));
   }),
   rest.get('*', (req, res, ctx) => {

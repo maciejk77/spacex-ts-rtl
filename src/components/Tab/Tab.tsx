@@ -3,12 +3,12 @@ import React from 'react';
 interface IProps {
   label: string;
   name: string;
-  onClick: any; // TODO any
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   activeTab: string | null;
 }
 
 const Tab = ({ label, onClick, name, activeTab }: IProps): JSX.Element => {
-  const isActive = activeTab === name;
+  const isActive: boolean = activeTab === name;
   const getColor = (bool: boolean) => (bool ? 'black' : 'white');
 
   return (

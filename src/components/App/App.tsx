@@ -3,20 +3,24 @@ import Tab from '../Tab/Tab';
 import { ROCKETS, DRAGONS } from '../../constants';
 import Container from '../Container/Container';
 import { fetchData } from '../../utils/fetchData';
+import { IDataItem } from '../../interfaces/index';
+
+type TActiveTab = string | null;
 
 const App = (): JSX.Element => {
-  const [activeTab, setActiveTab] = useState(null);
-  const [data, setData] = useState<any[]>([]); // TODO any
+  const [activeTab, setActiveTab] = useState<TActiveTab>(null);
+  const [data, setData] = useState<IDataItem[]>([]);
 
-  const handleClick = async (e: any) => {
-    // TODO any
-    const { name } = e.target;
+  const handleClick = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
+    const { name } = e.target as HTMLButtonElement;
     const data = await fetchData(name);
     setData(data);
     setActiveTab(name);
   };
 
-  const noDataYet = (
+  const noDataYet: JSX.Element = (
     <div style={{ marginTop: 10 }}>No data yet, click on tabs above</div>
   );
 

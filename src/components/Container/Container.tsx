@@ -1,18 +1,18 @@
 import React from 'react';
+import { IDataItem } from '../../interfaces';
 
 interface IProps {
-  data: any; // TODO any
+  data: IDataItem[];
 }
 
-// TODO any below
-const Container = ({ data }: IProps) => {
+const Container = ({ data }: IProps): JSX.Element => {
   return (
     <div data-testid="container">
-      {data.map((d: any) => (
-        <div key={d.id}>
-          <h2>{d.name}</h2>
-          <img src={d.flickr_images[0]} width="400" alt={d.name} />
-          <p>{d.description}</p>
+      {data.map(({ id, name, description, flickr_images }: IDataItem) => (
+        <div key={id}>
+          <h2>{name}</h2>
+          <img src={flickr_images[0]} width="400px" alt={name} />
+          <p>{description}</p>
           <hr />
         </div>
       ))}
