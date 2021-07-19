@@ -28,6 +28,12 @@ const App = (): JSX.Element => {
     <div style={{ marginTop: 10 }}>No data yet, click on tabs above</div>
   );
 
+  const Loader = () => (
+    <div style={{ marginTop: 10 }}>
+      {activeTab && loading ? 'Loading...' : ''}
+    </div>
+  );
+
   return (
     <>
       <h1>SpaceX</h1>
@@ -45,8 +51,8 @@ const App = (): JSX.Element => {
           activeTab={activeTab}
         />
       </>
+      <Loader />
       {error && !loading && noDataYet}
-      {activeTab && loading && <div>Loading...</div>}
       {data && <Container data={data} />}
     </>
   );
