@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tab from '../Tab/Tab';
 import { ROCKETS, DRAGONS } from '../../constants';
 import Container from '../Container/Container';
-import { fetchData } from '../../utils/fetchData';
-import { IDataItem } from '../../interfaces/index';
+import { useLazyQuery } from '@apollo/client';
+import { GET_DATA } from '../../graphql/Queries';
 
 type TActiveTab = string | null;
 
 const App = (): JSX.Element => {
-  const [activeTab, setActiveTab] = useState<TActiveTab>(null);
-  const [data, setData] = useState<IDataItem[]>([]);
+  const [activeTab, setActiveTab] = useState<TActiveTab>('');
+  const [allRockets, { loading, error, data }] = useLazyQuery(GET_DATA, {
+    variables: { rocketType: activeTab },
+  });
+
+  useEffect(() => {
+    allRockets();
+  }, [data, allRockets]);
 
   const handleClick = async (
     e: React.MouseEvent<HTMLButtonElement>
   ): Promise<void> => {
     const { name } = e.target as HTMLButtonElement;
-    const data = await fetchData(name);
-    setData(data);
     setActiveTab(name);
   };
 
@@ -41,7 +45,9 @@ const App = (): JSX.Element => {
           activeTab={activeTab}
         />
       </>
-      {data.length ? <Container data={data} /> : noDataYet}
+      {error && !loading && noDataYet}
+      {activeTab && loading && <div>Loading...</div>}
+      {data && <Container data={data} />}
     </>
   );
 };

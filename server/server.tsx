@@ -1,5 +1,6 @@
-// TODOD cannot require exported util fetchData, hence replaced here with axios
+// TODO cannot require an export util fetchData, hence replaced here with axios
 const axios = require('axios');
+const cors = require('cors');
 
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
@@ -10,10 +11,11 @@ const {
   GraphQLList,
 } = require('graphql');
 
-// TODO cannot require an exported const
+// TODO cannot require an export
 const BASE_URL = 'https://api.spacexdata.com/v4';
 
 const app = express();
+app.use(cors());
 
 const DataType = new GraphQLObjectType({
   name: 'Data',
@@ -28,26 +30,26 @@ const DataType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    getDataFor: {
+    allRockets: {
       type: new GraphQLList(DataType),
       description: 'A list of rockets or dragons',
       args: {
-        type: { type: GraphQLString },
+        rocketType: { type: GraphQLString },
       },
       resolve: async (_, args) => {
-        const { data } = await axios.get(`${BASE_URL}/${args.type}`);
+        const { data } = await axios.get(`${BASE_URL}/${args.rocketType}`);
         return data;
       },
     },
-    getItem: {
+    rocket: {
       type: new GraphQLList(DataType),
       description: 'Single item rocket or dragon',
       args: {
         id: { type: GraphQLString },
-        type: { type: GraphQLString },
+        rocketType: { type: GraphQLString },
       },
       resolve: async (_, args) => {
-        const { data } = await axios.get(`${BASE_URL}/${args.type}`);
+        const { data } = await axios.get(`${BASE_URL}/${args.rocketType}`);
         return data.filter((item) => item.id === args.id);
       },
     },
