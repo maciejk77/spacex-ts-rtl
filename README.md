@@ -16,3 +16,7 @@ Click here: [Previous extended app, without react-testing-library](https://githu
 ## Comments (to be completed)
 
 - some Typescript
+
+## Notes
+
+Downgrade to Node 10.12.0 if any problems
